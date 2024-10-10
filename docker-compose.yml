@@ -1,6 +1,7 @@
 version: '3'
 services:
     laravel.test:
+        platform: linux/amd64
         build:
             context: ./vendor/laravel/sail/runtimes/8.2
             dockerfile: Dockerfile
@@ -10,7 +11,7 @@ services:
         extra_hosts:
             - 'host.docker.internal:host-gateway'
         ports:
-            - '${APP_PORT:-80}:80'
+            - "8080:80"
             - '${VITE_PORT:-5173}:${VITE_PORT:-5173}'
         environment:
             WWWUSER: '${WWWUSER}'
@@ -28,9 +29,10 @@ services:
             - mailpit
             - selenium
     mysql:
+        platform: linux/amd64
         image: 'mysql/mysql-server:8.0'
         ports:
-            - '${FORWARD_DB_PORT:-3306}:3306'
+            - "3307:3306"
         environment:
             MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
             MYSQL_ROOT_HOST: '%'
@@ -52,6 +54,7 @@ services:
             retries: 3
             timeout: 5s
     redis:
+        platform: linux/amd64
         image: 'redis:alpine'
         ports:
             - '${FORWARD_REDIS_PORT:-6379}:6379'
@@ -67,6 +70,7 @@ services:
             retries: 3
             timeout: 5s
     meilisearch:
+        platform: linux/amd64
         image: 'getmeili/meilisearch:latest'
         ports:
             - '${FORWARD_MEILISEARCH_PORT:-7700}:7700'
@@ -84,6 +88,7 @@ services:
             retries: 3
             timeout: 5s
     mailpit:
+        platform: linux/amd64
         image: 'axllent/mailpit:latest'
         ports:
             - '${FORWARD_MAILPIT_PORT:-1025}:1025'
@@ -91,6 +96,7 @@ services:
         networks:
             - sail
     selenium:
+        platform: linux/amd64
         image: selenium/standalone-chrome
         extra_hosts:
             - 'host.docker.internal:host-gateway'

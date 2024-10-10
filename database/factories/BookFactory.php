@@ -16,10 +16,11 @@ class BookFactory extends Factory
      */
     public function definition(): array
     {
+        $randomCount = rand(1, 10);
         return [
             'title' => $this->faker->text,
             'author' => $this->faker->name,
-            'rating' => 5,
+            'rating' => $randomCount,
         ];
     }
 }

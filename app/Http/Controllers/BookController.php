@@ -22,6 +22,19 @@ class BookController extends Controller
         ]);
     }
 
+    public function edit(Book $book)
+    {
+        return view('edit', ['book' => $book]);
+    }
+
+    public function show(Book $book)
+    {
+        return response()->json([
+            'message' => 'Successfully fetched the book.',
+            'data' => $book
+        ]);
+    }
+    
     public function store(StoreRequest $request, Store $store)
     {
         $book = $store($request->validated());
@@ -44,7 +57,7 @@ class BookController extends Controller
 
     public function destroy(DestroyRequest $request, Destroy $destroy, Book $book)
     {
-        $destroy($book);
+        $book->delete();
 
         return response()->json([
             'message' => 'Successfully deleted the book.',
